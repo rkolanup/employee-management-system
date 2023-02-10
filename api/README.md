@@ -1,5 +1,5 @@
 ## Description
-This Application uses [Nest](https://github.com/nestjs/nest)Postgress and TypeORM to create api endpoints.
+This Application uses Nest Postgress and TypeORM to create api endpoints.
 Prerequisites:
 -install Postgress on you local machine
 
