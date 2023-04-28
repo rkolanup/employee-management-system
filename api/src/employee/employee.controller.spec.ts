@@ -4,8 +4,8 @@ import { EmployeeController } from './employee.controller';
 import { EmployeeService } from './employee.service';
 import { EmployeeModel } from './employee.model';
 import { of } from 'rxjs';
-import { Employee } from './employee.entity';
-import { Department } from '../department/department.entity';
+import { EmployeeEntity } from '../entities/employee.entity';
+import { DepartmentEntity } from '../entities/department.entity';
 
 describe('EmployeeController', () => {
   let employeeController: EmployeeController;
@@ -17,11 +17,11 @@ describe('EmployeeController', () => {
       providers: [
         EmployeeService,
         {
-          provide: getRepositoryToken(Employee),
+          provide: getRepositoryToken(EmployeeEntity),
           useValue: jest.fn()
         },
         {
-          provide: getRepositoryToken(Department),
+          provide: getRepositoryToken(DepartmentEntity),
           useValue: jest.fn()
         }
       ]

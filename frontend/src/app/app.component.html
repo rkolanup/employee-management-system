@@ -1,31 +1,13 @@
-<table class="table-auto w-full text-left">
-    <thead class="bg-gray-800 text-white">
-      <tr>
-        <th class="px-4 py-2">Name</th>
-        <th class="px-4 py-2">Email</th>
-        <th class="px-4 py-2">Department</th>
-        <th class="px-4 py-2">Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr >
-        <td class="border px-4 py-2"></td>
-        <td class="border px-4 py-2"></td>
-        <td class="border px-4 py-2"></td>
-        <td class="border px-4 py-2">
-          <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-            Add
-          </button>
-          <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-            Edit
-          </button>
-          <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-            Delete
-          </button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-  <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mt-4">
-    Add Employee
-  </button>
+
+<mat-drawer-container autosize>
+  <mat-toolbar>
+   <span>Employee Management System</span>
+   <span class="menu-spacer"></span>
+   <button mat-button routerLink="/employee-list">Employee List</button>
+   <button mat-button routerLink="/department-list">Department List</button>
+   <button mat-button>Project List</button>
+ </mat-toolbar>
+</mat-drawer-container>
+<router-outlet></router-outlet>
+
+

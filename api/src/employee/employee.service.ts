@@ -2,29 +2,27 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, UpdateResult, DeleteResult, Like } from 'typeorm';
-import { Employee } from './employee.entity';
-import { EmployeeModel } from './employee.model';
+import { EmployeeEntity } from '../entities/employee.entity';
+import { Employee } from './employee.model';
 import { from, Observable } from 'rxjs';
-import { Department } from '../department/department.entity';
+import { DepartmentEntity } from '../entities/department.entity';
 
 @Injectable()
 export class EmployeeService {
   constructor(
-    @InjectRepository(Employee)
-    private readonly employeeRepository: Repository<Employee>, //Use entity only for repository
-    @InjectRepository(Department)
-    private readonly departmentRepository: Repository<Department>
+    @InjectRepository(EmployeeEntity)
+    private readonly employeeRepository: Repository<EmployeeEntity>, //Use entity only for repository
   ) {}
 
-  addNewEmployee(employeeModel: EmployeeModel): Observable<EmployeeModel> {
+  addNewEmployee(employeeModel: Employee): Observable<Employee> {
     return from(this.employeeRepository.save(employeeModel));
   }
 
-  listofAllEmployees(): Observable<EmployeeModel[]> {
+  listofAllEmployees(): Observable<Employee[]> {
     return from(this.employeeRepository.find({ relations: ['department'] }));
   }
 
-  findEmployeeById(id: number): Observable<EmployeeModel> {
+  findEmployeeById(id: number): Observable<Employee> {
     return from(
       this.employeeRepository.findOne({
         where: { id },
@@ -33,7 +31,7 @@ export class EmployeeService {
     );
   }
 
-  async findByName(firstName: string, lastName: string): Promise<EmployeeModel[]> {
+  async findByName(firstName: string, lastName: string): Promise<Employee[]> {
     return await this.employeeRepository.find({
       where: [
         { firstName: Like(`%${firstName}%`) },
@@ -42,7 +40,7 @@ export class EmployeeService {
     });
   }
 /*
-  findEmployeeByDepartmentId(departmentId: number): Observable<EmployeeModel[]> {
+  findEmployeeByDepartmentId(departmentId: number): Observable<Employee[]> {
     return from(
       this.employeeRepository.find({
         where: { departmentId },
@@ -52,14 +50,14 @@ export class EmployeeService {
   }
 
 
-  async findByDepartmentName(departmentName: string): Promise<EmployeeModel[]> {
+  async findByDepartmentName(departmentName: string): Promise<Employee[]> {
     return this.employeeRepository.createQueryBuilder("employee")
       .leftJoinAndSelect("employee.department", "department")
       .where("department.name = :name", { name: departmentName })
       .getMany();
   }
 */
-  updateEmployees(id: number, employeeModel: EmployeeModel): Observable<UpdateResult> {
+  updateEmployees(id: number, employeeModel: Employee): Observable<UpdateResult> {
     return from(this.employeeRepository.update(id, employeeModel));
   }
 

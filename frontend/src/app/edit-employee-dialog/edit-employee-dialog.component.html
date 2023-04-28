@@ -1,0 +1,36 @@
+<h2 mat-dialog-title>{{ data.action }} Employee</h2>
+<mat-dialog-content>
+  <form [formGroup]="employeeForm">
+    <div class="flex flex-wrap w-full">
+      <input type="hidden" *ngIf="data.action === 'Edit'" formControlName="id" />
+      <mat-form-field class="form-input">
+        <mat-label>First Name</mat-label>
+        <input matInput formControlName="firstName"/>
+        <mat-error>Required</mat-error>
+      </mat-form-field>
+      <mat-form-field class="form-input">
+        <mat-label>Last Name</mat-label>
+        <input matInput formControlName="lastName"/>
+        <mat-error>Required</mat-error>
+      </mat-form-field>
+      <mat-form-field class="form-input">
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="email"/>
+        <mat-error>Required</mat-error>
+      </mat-form-field>
+      <mat-form-field class="form-input">
+        <mat-label>Department</mat-label>
+        <mat-select formControlName="department">
+          <mat-option *ngFor="let department of data.departmentList" [value]="department.id">
+            {{ department.name }}
+          </mat-option>
+        </mat-select>
+        <mat-error>Required</mat-error>
+      </mat-form-field>
+    </div>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button matDialogClose="true" color="warn"  (click)="onCancel()">Cancel</button>
+  <button mat-button color="primary" (click)="onSave()" color="primary">Save</button>
+</mat-dialog-actions>
