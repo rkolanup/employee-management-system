@@ -20,11 +20,11 @@ export class EmployeeListService {
     return this.http.get<Department[]>(`${this._url}/departments`);
   }
 
-  deleteEmployee(id: number){
+  deleteEmployee(id: any){
     return this.http.delete(`${this._url}/employees/${id}`);
   }
 
-  updateEmployee(id: number, employeeData: any) {
+  updateEmployee(id: any, employeeData: any) {
     return this.http.put(`${this._url}/employees/${id}`, employeeData);
   }
 
