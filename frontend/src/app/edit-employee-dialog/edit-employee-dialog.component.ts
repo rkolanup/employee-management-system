@@ -1,7 +1,7 @@
 import { Component, Inject, Input, OnInit, Optional } from '@angular/core';
-import { Employees } from '../employee-list/employee-list.model';
-import { MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import { FormBuilder, FormGroup, Validators} from "@angular/forms";
+import { Employees } from '../models/employee-list.model';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 
 @Component({
   selector: 'app-edit-employee-dialog',
@@ -15,12 +15,12 @@ export class EditEmployeeDialogComponent implements OnInit {
 
   constructor(
     public dialogRef: MatDialogRef<EditEmployeeDialogComponent>,
-   @Optional() @Inject(MAT_DIALOG_DATA) public data: { action: string, departmentList: any, info: Employees },
+    @Optional() @Inject(MAT_DIALOG_DATA) public data: { action: string, departmentList: any, info: Employees },
     private fb: FormBuilder,
-  ) {}
+  ) { }
 
   ngOnInit() {
-    if(this.data.action === 'Add'){
+    if (this.data.action === 'Add') {
       this.employeeForm = this.fb.group({
         firstName: ['', Validators.required],
         lastName: ['', Validators.required],
@@ -38,7 +38,7 @@ export class EditEmployeeDialogComponent implements OnInit {
     }
     console.log(this.employeeForm.value)
   }
-   
+
   onSave() {
     if (this.employeeForm.valid) {
       const employee: Employees = {
@@ -47,14 +47,14 @@ export class EditEmployeeDialogComponent implements OnInit {
         lastName: this.employeeForm.value.lastName,
         email: this.employeeForm.value.email,
         department: {
-          id: this.employeeForm.value.department        
+          id: this.employeeForm.value.department
         }
       };
       this.dialogRef.close(employee);
     }
   }
 
-  onCancel(){
+  onCancel() {
     this.dialogRef.close();
   }
 }

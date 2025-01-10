@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Employees, Department } from './employee-list/employee-list.model';
-import {Observable, of} from "rxjs"
+import { Employees, Department } from './models/employee-list.model';
+import { Observable, of } from "rxjs"
 import { HttpClient } from "@angular/common/http";
 import { environment } from 'src/environments/environment';
 @Injectable({
@@ -8,19 +8,19 @@ import { environment } from 'src/environments/environment';
 })
 export class EmployeeListService {
 
-  private _url:string = environment.apiUrl
+  private _url: string = environment.apiUrl
 
   constructor(private http: HttpClient) { }
-  
-  getEmployees(){
+
+  getEmployees() {
     return this.http.get<Employees[]>(`${this._url}/employees`);
   }
 
-  getDepartments(){
+  getDepartments() {
     return this.http.get<Department[]>(`${this._url}/departments`);
   }
 
-  deleteEmployee(id: any){
+  deleteEmployee(id: any) {
     return this.http.delete(`${this._url}/employees/${id}`);
   }
 
