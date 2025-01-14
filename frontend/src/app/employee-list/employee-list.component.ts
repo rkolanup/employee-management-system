@@ -24,26 +24,23 @@ export class EmployeeListComponent {
   searchTerm = '';
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
-  dataSource: any;
+  employeeData: any;
   departments: Department[] = [];
-
+  employees$!: Observable<Employees[]>;
+  departments$!: Observable<Department[]>;
   constructor(private dialog: MatDialog, private store: Store<AppState>, private appService: AppService) { }
 
   ngOnInit() {
-    // this.store.select(employeesList).subscribe((employees) => {
-    //   console.log('Employees: ', employees);
-    //   this.dataSource = new MatTableDataSource<Employees>(employees);
-    //   this.dataSource.paginator = this.paginator;
-    //   this.dataSource.filterPredicate = this.filterEmployees;
-    // });
+    this.store.dispatch({ type: '[Employees API] Load Employees' });
+    this.store.dispatch({ type: '[Departments API] Load Departments' });
 
-    this.appService.getEmployees().subscribe(data => {
-      this.dataSource = new MatTableDataSource<Employees>(data);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.filterPredicate = this.filterEmployees;
+    this.store.select(selectEmployees).subscribe((employees) => {
+      this.employeeData = new MatTableDataSource<Employees>(employees);
+      this.employeeData.paginator = this.paginator;
+      this.employeeData.filterPredicate = this.filterEmployees;
     });
 
-    this.appService.getDepartments().subscribe((departments) => {
+    this.store.select(selectDepartments).subscribe((departments) => {
       this.departments = departments;
     });
   }
@@ -55,7 +52,7 @@ export class EmployeeListComponent {
 
   applyFilter() {
     const filterValue = this.searchTerm.toLowerCase();
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+    this.employeeData.filter = filterValue.trim().toLowerCase();
   }
 
   addEmployee() {
@@ -63,7 +60,7 @@ export class EmployeeListComponent {
       width: '80%',
       data: {
         action: 'Add',
-        // departmentList: this.departments
+        departmentList: this.departments
       }
     });
     editDialogRef.afterClosed().subscribe(result => {
@@ -83,7 +80,7 @@ export class EmployeeListComponent {
       width: '80%',
       data: {
         action: 'Edit',
-        //departmentList: this.departments,
+        departmentList: this.departments,
         info: {
           id: employee.id,
           firstName: employee.firstName,
