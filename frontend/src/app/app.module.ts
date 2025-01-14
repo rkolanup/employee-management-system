@@ -25,8 +25,9 @@ import { ConfirmDeleteDialogComponent } from './confirm-delete-dialog/confirm-de
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { environment } from '../environments/environment'; // Adjust path if necessary
-//import { reducers } from './state/reducers'; // Add your reducers here
+import { environment } from '../environments/environment';
+import { appReducers } from './state/reducers/app.reducer';
+import { AppEffects } from '../../src/app/state/effects/app.effects'
 
 @NgModule({
   declarations: [
@@ -37,6 +38,8 @@ import { environment } from '../environments/environment'; // Adjust path if nec
   ],
   imports: [
     BrowserModule,
+    StoreModule.forRoot(appReducers),
+    EffectsModule.forRoot(AppEffects),
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
@@ -52,14 +55,7 @@ import { environment } from '../environments/environment'; // Adjust path if nec
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
-    ReactiveFormsModule,
-    // NgRx Store Modules
-    //StoreModule.forRoot(reducers, {}), // Replace 'reducers' with your reducer configuration
-    EffectsModule.forRoot([]), // Add effects classes here
-    StoreDevtoolsModule.instrument({
-      maxAge: 25, // Retains last 25 states
-      logOnly: environment.production, // Restrict extension to log-only mode in production
-    }),
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

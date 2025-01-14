@@ -1,11 +1,17 @@
 import { Component, ViewChild } from '@angular/core';
 import { Employees, Department } from '../models/employee-list.model';
-import { EmployeeListService } from '../employee-list.service';
+import { AppService } from '../app.service';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { EditEmployeeDialogComponent } from '../edit-employee-dialog/edit-employee-dialog.component';
 import { ConfirmDeleteDialogComponent } from '../confirm-delete-dialog/confirm-delete-dialog.component';
+
+import { selectDepartments, selectEmployees, selectEmployeesList } from '../state/selectors/employee.selectors';
+import { Store } from '@ngrx/store';
+import { Observable, BehaviorSubject, tap, filter } from 'rxjs';
+import { AppState } from '../state/app.state';
+import { state } from '@angular/animations';
 
 @Component({
   selector: 'app-employee-list',
@@ -14,23 +20,30 @@ import { ConfirmDeleteDialogComponent } from '../confirm-delete-dialog/confirm-d
 })
 export class EmployeeListComponent {
   displayedColumns = ['firstName', 'lastName', 'email', 'department', 'action'];
-  departments: Department[] = [];
-  dataSource!: MatTableDataSource<Employees>;
 
   searchTerm = '';
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
+  dataSource: any;
+  departments: Department[] = [];
 
-  constructor(private employeeListService: EmployeeListService, private dialog: MatDialog) { }
+  constructor(private dialog: MatDialog, private store: Store<AppState>, private appService: AppService) { }
 
   ngOnInit() {
-    this.employeeListService.getEmployees().subscribe(data => {
+    // this.store.select(employeesList).subscribe((employees) => {
+    //   console.log('Employees: ', employees);
+    //   this.dataSource = new MatTableDataSource<Employees>(employees);
+    //   this.dataSource.paginator = this.paginator;
+    //   this.dataSource.filterPredicate = this.filterEmployees;
+    // });
+
+    this.appService.getEmployees().subscribe(data => {
       this.dataSource = new MatTableDataSource<Employees>(data);
       this.dataSource.paginator = this.paginator;
       this.dataSource.filterPredicate = this.filterEmployees;
     });
 
-    this.employeeListService.getDepartments().subscribe((departments) => {
+    this.appService.getDepartments().subscribe((departments) => {
       this.departments = departments;
     });
   }
@@ -50,26 +63,27 @@ export class EmployeeListComponent {
       width: '80%',
       data: {
         action: 'Add',
-        departmentList: this.departments
+        // departmentList: this.departments
       }
     });
     editDialogRef.afterClosed().subscribe(result => {
       if (result) {
         // Add new employee record
-        this.employeeListService.addEmployee(result).subscribe(newEmployee => {
-          console.log('New Employee: ', newEmployee);
-        });
+        // this.appService.addEmployee(result).subscribe(newEmployee => {
+        //   console.log('New Employee: ', newEmployee);
+        // });
+        //this.store.dispatch(addEmployee({ employee: result }));
       }
     });
   }
 
   editEmployee(employee: Employees) {
-    console.log('Edit EMPLOYEE Departments: ', this.departments)
+    //console.log('Edit EMPLOYEE Departments: ', this.departments)
     const editDialogRef = this.dialog.open(EditEmployeeDialogComponent, {
       width: '80%',
       data: {
         action: 'Edit',
-        departmentList: this.departments,
+        //departmentList: this.departments,
         info: {
           id: employee.id,
           firstName: employee.firstName,
@@ -92,10 +106,11 @@ export class EmployeeListComponent {
           email: result.email,
           department: result.department
         };
+        //this.store.dispatch(updateEmployee({ id: result.id, employee: updatedEmployee }));
 
-        this.employeeListService.updateEmployee(result.id, updatedEmployee).subscribe(result => {
-          console.log('Update Result: ', result);
-        });
+        // this.appService.updateEmployee(result.id, updatedEmployee).subscribe(result => {
+        //   console.log('Update Result: ', result);
+        // });
       } else {
         console.log('Result object is missing some properties');
       }
@@ -113,9 +128,10 @@ export class EmployeeListComponent {
       if (result === true) {
         // Delete employee record
         console.log('Deleting employee record:', employee);
-        this.employeeListService.deleteEmployee(employee.id).subscribe(() => {
-          this.dataSource.data = this.dataSource.data.filter(e => e.id !== employee.id);
-        });
+        //this.store.dispatch(deleteEmployee({ id: employee.id }));
+        // this.appService.deleteEmployee(employee.id).subscribe(() => {
+        //   this.dataSource.data = this.dataSource.data.filter(e => e.id !== employee.id);
+        // });
       }
     });
   }
