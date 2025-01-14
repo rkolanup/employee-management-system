@@ -19,7 +19,7 @@ import { state } from '@angular/animations';
   styleUrls: ['./employee-list.component.scss']
 })
 export class EmployeeListComponent {
-  displayedColumns = ['firstName', 'lastName', 'email', 'department', 'action'];
+  displayedColumns = ['name', 'email', 'department', 'action'];
 
   searchTerm = '';
 
