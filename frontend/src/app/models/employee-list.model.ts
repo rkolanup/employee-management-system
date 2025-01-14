@@ -11,9 +11,5 @@ export interface Employees {
     department: Department;
 }
 
-export interface EmployeeState {
-    employees: Employees[];
-    departments: Department[];
-}
 
 
