@@ -7,7 +7,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { EditEmployeeDialogComponent } from '../edit-employee-dialog/edit-employee-dialog.component';
 import { ConfirmDeleteDialogComponent } from '../confirm-delete-dialog/confirm-delete-dialog.component';
 
-import { selectDepartments, selectEmployees, selectEmployeesList } from '../state/selectors/employee.selectors';
+//import { selectDepartments, selectEmployees, selectEmployeesList } from '../state/selectors/employee.selectors';
 import { Store } from '@ngrx/store';
 import { Observable, BehaviorSubject, tap, filter } from 'rxjs';
 import { AppState } from '../state/app.state';
@@ -34,15 +34,15 @@ export class EmployeeListComponent {
     this.store.dispatch({ type: '[Employees API] Load Employees' });
     this.store.dispatch({ type: '[Departments API] Load Departments' });
 
-    this.store.select(selectEmployees).subscribe((employees) => {
-      this.employeeData = new MatTableDataSource<Employees>(employees);
-      this.employeeData.paginator = this.paginator;
-      this.employeeData.filterPredicate = this.filterEmployees;
-    });
+    // this.store.select(selectEmployees).subscribe((employees) => {
+    //   this.employeeData = new MatTableDataSource<Employees>(employees);
+    //   this.employeeData.paginator = this.paginator;
+    //   this.employeeData.filterPredicate = this.filterEmployees;
+    // });
 
-    this.store.select(selectDepartments).subscribe((departments) => {
-      this.departments = departments;
-    });
+    // this.store.select(selectDepartments).subscribe((departments) => {
+    //   this.departments = departments;
+    // });
   }
 
   filterEmployees(data: Employees, filter: string): boolean {

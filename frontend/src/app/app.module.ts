@@ -26,7 +26,7 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
-import { appReducers } from './state/reducers/app.reducer';
+import { appReducer } from './state/reducers/app.reducer';
 import { AppEffects } from '../../src/app/state/effects/app.effects'
 
 @NgModule({
@@ -38,7 +38,7 @@ import { AppEffects } from '../../src/app/state/effects/app.effects'
   ],
   imports: [
     BrowserModule,
-    StoreModule.forRoot(appReducers),
+    StoreModule.forRoot(appReducer),
     EffectsModule.forRoot(AppEffects),
     AppRoutingModule,
     FormsModule,
