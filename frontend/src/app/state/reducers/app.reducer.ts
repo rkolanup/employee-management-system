@@ -1,11 +1,11 @@
 import { ActionReducerMap } from '@ngrx/store';
 import { employeesReducer, EmployeesState } from './employee.reducer';
-import { departmentsReducer } from './departments.reducer';
+import { departmentsReducer, DepartmentsState } from './departments.reducer';
 import { Department } from 'src/app/models/employee-list.model';
 
 export interface AppState {
     employees: EmployeesState;
-    departments: Department[];
+    departments: DepartmentsState;
 }
 
 export const appReducer: ActionReducerMap<AppState> = {

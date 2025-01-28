@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { AppService } from '../../app.service';
-import { loadEmployeesSuccess } from '../actions/app.actions';
+import { addEmployeeFailure, addEmployeeSuccess, loadEmployeesSuccess } from '../actions/app.actions';
 import { catchError, map, mergeMap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { Store } from '@ngrx/store';
@@ -24,4 +24,20 @@ export class EmployeeEffects {
             )
         )
     );
+
+    // addEmployee$ = createEffect(() =>
+    //     this.actions$.pipe(
+    //         ofType('[Employees API] Add Employee'), // Match the action
+    //         mergeMap((action: any) =>
+    //             this.appService.addEmployee(action.employee).pipe(
+    //                 map((employee) =>
+    //                     addEmployeeSuccess({ employee }) // Dispatch success action with added employee
+    //                 ),
+    //                 catchError((error) =>
+    //                     of(addEmployeeFailure({ error })) // Dispatch failure action with error
+    //                 )
+    //             )
+    //         )
+    //     )
+    // );
 }

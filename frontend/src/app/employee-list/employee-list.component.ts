@@ -12,6 +12,8 @@ import { Store } from '@ngrx/store';
 import { Observable, BehaviorSubject, tap, filter } from 'rxjs';
 import { AppState } from '../state/app.state';
 import { state } from '@angular/animations';
+import { selectAllDepartments, selectAllEmployees, selectEmployeeLoading } from '../state/selectors/app.selectors';
+import { EmployeesState } from '../state/reducers/employee.reducer';
 
 @Component({
   selector: 'app-employee-list',
@@ -34,15 +36,15 @@ export class EmployeeListComponent {
     this.store.dispatch({ type: '[Employees API] Load Employees' });
     this.store.dispatch({ type: '[Departments API] Load Departments' });
 
-    // this.store.select(selectEmployees).subscribe((employees) => {
-    //   this.employeeData = new MatTableDataSource<Employees>(employees);
-    //   this.employeeData.paginator = this.paginator;
-    //   this.employeeData.filterPredicate = this.filterEmployees;
-    // });
+    this.store.select(selectAllEmployees).subscribe((emp) => {
+      this.employeeData = new MatTableDataSource<Employees>(emp);
+      this.employeeData.paginator = this.paginator;
+      this.employeeData.filterPredicate = this.filterEmployees;
+    });
 
-    // this.store.select(selectDepartments).subscribe((departments) => {
-    //   this.departments = departments;
-    // });
+    this.store.select(selectAllDepartments).subscribe((departments) => {
+      this.departments = departments;
+    });
   }
 
   filterEmployees(data: Employees, filter: string): boolean {

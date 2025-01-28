@@ -40,6 +40,7 @@ import { AppEffects } from '../../src/app/state/effects/app.effects'
     BrowserModule,
     StoreModule.forRoot(appReducer),
     EffectsModule.forRoot(AppEffects),
+    StoreDevtoolsModule.instrument({ maxAge: 25 }),
     AppRoutingModule,
     FormsModule,
     HttpClientModule,

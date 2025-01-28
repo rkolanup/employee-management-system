@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Employees, Department } from './models/employee-list.model';
-import { Observable, of } from "rxjs"
+import { Observable, of, tap } from "rxjs"
 import { HttpClient } from "@angular/common/http";
 import { environment } from 'src/environments/environment';
 @Injectable({

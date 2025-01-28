@@ -2,6 +2,7 @@ import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { EmployeesState } from '../reducers/employee.reducer';
 import { Department } from 'src/app/models/employee-list.model';
 import { AppState } from '../app.state';
+import { DepartmentsState } from '../reducers/departments.reducer';
 
 export const selectEmployeesState = (state: AppState) => state.employees;
 export const selectDepartmentsState = (state: AppState) => state.departments;
@@ -22,8 +23,7 @@ export const selectEmployeeError = createSelector(
     (state: EmployeesState) => state.error
 );
 
-// Departments selectors
 export const selectAllDepartments = createSelector(
     selectDepartmentsState,
-    (state: Department[]) => state
+    (state: DepartmentsState) => state.departments
 );

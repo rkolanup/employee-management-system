@@ -4,9 +4,28 @@ import {
     loadDepartmentsSuccess
 } from '../actions/app.actions';
 
-export const initialDepartmentsState: Department[] = []; // Initial empty array
+export interface DepartmentsState {
+    departments: Department[];
+}
+
+const initialDepartmentsState: DepartmentsState = {
+    departments: [],
+};
 
 export const departmentsReducer = createReducer(
     initialDepartmentsState,
-    on(loadDepartmentsSuccess, (state, { departments }) => departments)
+    on(loadDepartmentsSuccess, (state, { departments }) => ({
+        ...state,
+        departments, // Keep the state structure intact
+    }))
 );
+
+
+
+
+
+
+// export const departmentsReducer = createReducer(
+//     initialDepartmentsState,
+//     on(loadDepartmentsSuccess, (state, { departments }) => departments)
+// );

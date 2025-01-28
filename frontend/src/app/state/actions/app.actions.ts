@@ -1,5 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 import { Employees, Department } from '../../models/employee-list.model';
+import { EmployeesState } from '../reducers/employee.reducer';
 
 export const loadEmployeesSuccess = createAction(
     '[Employee API] Load Employees Success',
