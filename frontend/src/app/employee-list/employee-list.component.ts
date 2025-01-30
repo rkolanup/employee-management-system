@@ -14,6 +14,7 @@ import { AppState } from '../state/app.state';
 import { state } from '@angular/animations';
 import { selectAllDepartments, selectAllEmployees, selectEmployeeLoading } from '../state/selectors/app.selectors';
 import { EmployeesState } from '../state/reducers/employee.reducer';
+import { addEmployee, editEmployee } from '../state/actions/app.actions';
 
 @Component({
   selector: 'app-employee-list',
@@ -67,11 +68,7 @@ export class EmployeeListComponent {
     });
     editDialogRef.afterClosed().subscribe(result => {
       if (result) {
-        // Add new employee record
-        // this.appService.addEmployee(result).subscribe(newEmployee => {
-        //   console.log('New Employee: ', newEmployee);
-        // });
-        //this.store.dispatch(addEmployee({ employee: result }));
+        this.store.dispatch(addEmployee({ employee: result }));
       }
     });
   }
@@ -105,7 +102,8 @@ export class EmployeeListComponent {
           email: result.email,
           department: result.department
         };
-        //this.store.dispatch(updateEmployee({ id: result.id, employee: updatedEmployee }));
+        console.log('Updated Employee: ', updatedEmployee);
+        this.store.dispatch(editEmployee({ id: result.id, employee: updatedEmployee }));
 
         // this.appService.updateEmployee(result.id, updatedEmployee).subscribe(result => {
         //   console.log('Update Result: ', result);

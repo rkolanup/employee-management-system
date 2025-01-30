@@ -36,7 +36,6 @@ export class EditEmployeeDialogComponent implements OnInit {
         department: [this.data.info.department.id, Validators.required],
       });
     }
-    console.log(this.employeeForm.value)
   }
 
   onSave() {
@@ -50,6 +49,7 @@ export class EditEmployeeDialogComponent implements OnInit {
           id: this.employeeForm.value.department
         }
       };
+      this.employeeForm.reset();
       this.dialogRef.close(employee);
     }
   }

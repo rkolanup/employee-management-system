@@ -1,8 +1,10 @@
 import { createReducer, on } from '@ngrx/store';
 import { Employees, Department } from '../../models/employee-list.model';
 import {
+    addEmployee,
     addEmployeeFailure,
     addEmployeeSuccess,
+    editEmployeeSuccess,
     loadEmployeesSuccess,
 } from '../actions/app.actions';
 
@@ -36,5 +38,11 @@ export const employeesReducer = createReducer(
         ...state,
         loading: false,
         error,
-    }))
+    })),
+    on(editEmployeeSuccess, (state, { employee }) => ({
+        ...state,
+        employees: state.employees.map(emp => emp.id === employee.id ? { ...employee } : emp),
+        loading: false,
+        error: null
+    })),
 );

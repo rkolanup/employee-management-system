@@ -10,9 +10,17 @@ export class DepartmentService {
   constructor(
     @InjectRepository(DepartmentEntity)
     private readonly departmentRepository: Repository<DepartmentEntity>
-  ) {}
+  ) { }
 
   listOfDepartments(): Observable<Department[]> {
     return from(this.departmentRepository.find());
+  }
+
+  findDepartmentById(id: number): Observable<Department> {
+    return from(
+      this.departmentRepository.findOne({
+        where: { id }
+      })
+    );
   }
 }

@@ -20,11 +20,15 @@ export class AppService {
     return this.http.get<Department[]>(`${this._url}/departments`);
   }
 
+  getDepartmentsById(id: any) {
+    return this.http.get<Department>(`${this._url}/departments/${id}`);
+  }
+
   deleteEmployee(id: any) {
     return this.http.delete(`${this._url}/employees/${id}`);
   }
 
-  updateEmployee(id: any, employeeData: any) {
+  updateEmployee(id: number, employeeData: Employees) {
     return this.http.put(`${this._url}/employees/${id}`, employeeData);
   }
 
