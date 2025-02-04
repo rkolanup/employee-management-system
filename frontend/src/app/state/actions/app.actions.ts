@@ -41,3 +41,18 @@ export const editEmployeeFailure = createAction(
     '[Employees API] Edit Employee Failure',
     props<{ error: any }>()
 );
+
+export const deleteEmployee = createAction(
+    '[Employee API] Delete Employee',
+    props<{ id: number, employee: Employees }>()
+);
+
+export const deleteEmployeeSuccess = createAction(
+    '[Employees API] Delete Employee Success',
+    props<{ id: number }>()
+);
+
+export const deleteEmployeeFailure = createAction(
+    '[Employees API] Delete Employee Failure',
+    props<{ error: any }>()
+);

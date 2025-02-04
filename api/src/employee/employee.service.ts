@@ -1,11 +1,10 @@
 /* eslint-disable prettier/prettier */
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, DeleteResult, Like } from 'typeorm';
+import { Repository, Like } from 'typeorm';
 import { EmployeeEntity } from '../entities/employee.entity';
 import { Employee } from './employee.model';
-import { from, Observable, switchMap } from 'rxjs';
-import { DepartmentEntity } from '../entities/department.entity';
+import { from, map, Observable, switchMap } from 'rxjs';
 
 @Injectable()
 export class EmployeeService {
@@ -63,7 +62,9 @@ export class EmployeeService {
     );
   }
 
-  deleteEmployee(id: number): Observable<DeleteResult> {
-    return from(this.employeeRepository.delete(id));
+  deleteEmployee(id: number): Observable<boolean> {
+    return from(this.employeeRepository.delete(id)).pipe(
+      map((result) => result.affected > 0)
+    );
   }
 }

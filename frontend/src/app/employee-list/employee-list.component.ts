@@ -14,7 +14,7 @@ import { AppState } from '../state/app.state';
 import { state } from '@angular/animations';
 import { selectAllDepartments, selectAllEmployees, selectEmployeeLoading } from '../state/selectors/app.selectors';
 import { EmployeesState } from '../state/reducers/employee.reducer';
-import { addEmployee, editEmployee } from '../state/actions/app.actions';
+import { addEmployee, editEmployee, deleteEmployee } from '../state/actions/app.actions';
 
 @Component({
   selector: 'app-employee-list',
@@ -74,7 +74,6 @@ export class EmployeeListComponent {
   }
 
   editEmployee(employee: Employees) {
-    //console.log('Edit EMPLOYEE Departments: ', this.departments)
     const editDialogRef = this.dialog.open(EditEmployeeDialogComponent, {
       width: '80%',
       data: {
@@ -102,12 +101,7 @@ export class EmployeeListComponent {
           email: result.email,
           department: result.department
         };
-        console.log('Updated Employee: ', updatedEmployee);
         this.store.dispatch(editEmployee({ id: result.id, employee: updatedEmployee }));
-
-        // this.appService.updateEmployee(result.id, updatedEmployee).subscribe(result => {
-        //   console.log('Update Result: ', result);
-        // });
       } else {
         console.log('Result object is missing some properties');
       }
@@ -123,12 +117,7 @@ export class EmployeeListComponent {
 
     deleteDialogRef.afterClosed().subscribe(result => {
       if (result === true) {
-        // Delete employee record
-        console.log('Deleting employee record:', employee);
-        //this.store.dispatch(deleteEmployee({ id: employee.id }));
-        // this.appService.deleteEmployee(employee.id).subscribe(() => {
-        //   this.dataSource.data = this.dataSource.data.filter(e => e.id !== employee.id);
-        // });
+        this.store.dispatch(deleteEmployee({ id: employee.id, employee: employee }));
       }
     });
   }

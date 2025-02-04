@@ -4,6 +4,9 @@ import {
     addEmployee,
     addEmployeeFailure,
     addEmployeeSuccess,
+    deleteEmployeeFailure,
+    deleteEmployeeSuccess,
+    editEmployeeFailure,
     editEmployeeSuccess,
     loadEmployeesSuccess,
 } from '../actions/app.actions';
@@ -44,5 +47,20 @@ export const employeesReducer = createReducer(
         employees: state.employees.map(emp => emp.id === employee.id ? { ...employee } : emp),
         loading: false,
         error: null
+    })),
+    on(editEmployeeFailure, (state, { error }) => ({
+        ...state,
+        loading: false,
+        error,
+    })),
+    on(deleteEmployeeSuccess, (state, { id }) => ({
+        ...state,
+        employees: state.employees.filter(emp => emp.id !== id),
+        error: null
+    })),
+    on(deleteEmployeeFailure, (state, { error }) => ({
+        ...state,
+        loading: false,
+        error,
     })),
 );

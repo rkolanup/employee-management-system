@@ -58,11 +58,7 @@ export class EmployeeEffects {
             ofType(EmployeeActions.editEmployee),
             mergeMap(({ id, employee }) =>
                 this.appService.updateEmployee(id, employee).pipe(
-                    tap((employee) => {
-                        console.log('Employee: ', employee);
-                    }),
                     map((updatedEmployee) => {
-
                         return EmployeeActions.editEmployeeSuccess({ employee: updatedEmployee });
                     }),
                     catchError((error) =>
@@ -73,22 +69,28 @@ export class EmployeeEffects {
         )
     );
 
-    // editEmployee$ = createEffect(() =>
-    //     this.actions$.pipe(
-    //         ofType(EmployeeActions.editEmployee),
-    //         mergeMap(({ id, employee }) =>
-    //             this.appService.updateEmployee(id, employee).pipe(
-    //                 map((updatedEmployee) => {
-    //                     console.log('Updated Employee: ', updatedEmployee);
-    //                     return EmployeeActions.editEmployeeSuccess({ employee: updatedEmployee });
-    //                 }),
-    //                 catchError((error) =>
-    //                     of(EmployeeActions.editEmployeeFailure({ error }))
-    //                 )
-    //             )
-    //         )
-    //     )
-    // );
+    deleteEmployee$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(EmployeeActions.deleteEmployee),
+            mergeMap(({ id }) =>
+                this.appService.deleteEmployee(id).pipe(
+                    map((response: any) =>
+                        response
+                            ? EmployeeActions.deleteEmployeeSuccess({ id })
+                            : EmployeeActions.deleteEmployeeFailure({ error: 'Deletion failed' })
+                    ),
+                    catchError((error) =>
+                        of(EmployeeActions.deleteEmployeeFailure({ error: error.message || 'Unknown error' }))
+                    )
+                )
+            )
+        )
+    );
+
+
+
+
+
 
 
 }

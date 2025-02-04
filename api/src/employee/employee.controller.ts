@@ -1,7 +1,6 @@
 /* eslint-disable prettier/prettier */
 import { Controller, Post, Body, Get, Put, Param, Delete, Header } from '@nestjs/common';
 import { Observable } from 'rxjs';
-import { DeleteResult, UpdateResult } from 'typeorm';
 import { EmployeeService } from './employee.service';
 import { Employee } from './employee.model';
 
@@ -47,7 +46,7 @@ export class EmployeeController {
   }
 
   @Delete(':id')
-  deleteEmployee(@Param('id') id: number): Observable<DeleteResult> {
+  deleteEmployee(@Param('id') id: number): Observable<boolean> {
     return this.employeeService.deleteEmployee(id);
   }
 }
